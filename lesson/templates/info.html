@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+    <div class="image">
+        <img src="{{ info.image.url }}" alt="no image">
+        <p>{{ info.title }}</p>
+        <p>{{ info.description }}</p>
+        <p>{{ info.time }}</p>
+        <a href="{% url 'update' info.id %}">Yangilash</a>
+        <a style="color:red" href="{% url 'delete' info.id %}">Delete</a>
+        <p>------------------------------------------------</p>
+    </div>
+</body>
+</html>

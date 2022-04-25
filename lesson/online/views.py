@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import News
@@ -5,22 +6,35 @@ from pprint import pprint
 from .forms import *
 
 def news(request):
-    new = News.objects.all()
+    cats = Category.objects.all()
+    return render(request,'news.html',context={'cats': cats})
+
+def cats(request,id):
+    print(type(id))
+    new = News.objects.filter(category_id=id)
     all_news = []
     for i in new:
-        # print(i.title,i.created_time.strftime("%d.%m.%Y"))
-        print(i.imageURL)
         a = {
             'id':i.id,
-            'cat':i.category.name,
             "title":i.title,
             "image":i.imageURL,
             "desc":i.description,
             'time':i.created_time.strftime("%d.%m.%Y")
         }
         all_news.append(a)
-    # pprint(all_news)
-    return render(request,'news.html',context={'yangiliklar':all_news})
+    return render(request,'cats.html',context={'news':all_news,
+                                               "name":Category.objects.get(id=id).name})
+
+def search(request):
+    print(request.method)
+    if request.method=="POST":
+        text = request.POST.get('search')
+        news = News.objects.filter(title__icontains=text)
+        print(news)
+    return render(request,'search.html',context={'news':news})
+
+def info(request,id):
+    return render(request,'info.html',{'info':News.objects.get(id=id)})
 
 def add(request):
     form = Yangiliklar()

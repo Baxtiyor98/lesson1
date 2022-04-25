@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+
+  {% for n in news %}
+    <div class="image">
+        <img src="{{ n.image.url }}" alt="no image">
+        <p>{{ n.title }}</p>
+        <button><a href="{% url 'info' n.id %}">Batafsil</a></button>
+
+    </div>
+    {% endfor %}
+</body>
+</html>

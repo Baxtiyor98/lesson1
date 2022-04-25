@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+    <h1 class="">{{ name }}</h1>
+  {% for n in news %}
+    <div class="image">
+        <img src="{{ n.image }}" alt="no image">
+        <a href="{% url 'info' n.id %}">{{ n.title }}</a>
+        <p>{{ n.time }}</p>
+        <a href="{% url 'update' n.id %}">Yangilash</a>
+        <a style="color:red" href="{% url 'delete' n.id %}">Delete</a>
+        <p>------------------------------------------------</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
