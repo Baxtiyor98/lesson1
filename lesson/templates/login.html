@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+</head>
+<body>
+    <form method="post" action="{% url 'log_in' %}" class="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+        <p class="">!1234567A@aass</p>
+        <a href="{% url 'register' %}"><i class="fa fa-fw fa-lock"></i>Register</a>
+</body>
+</html>

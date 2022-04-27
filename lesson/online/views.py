@@ -1,8 +1,8 @@
-from django.db.models import Q
+from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import News
-from pprint import pprint
+
 from .forms import *
 
 def news(request):
@@ -60,3 +60,37 @@ def update(request,id):
 def delete(request,id):
     News.objects.get(id=id).delete()
     return redirect('news')
+
+def register(request):
+    form = Registration(request.POST)
+    if request.method=="POST":
+        if form.is_valid():
+            form.save()
+            username = request.POST['username']
+            password = request.POST['password1']
+            email = request.POST['email']
+            user = authenticate(request, username=username, password=password, email=email)
+            print(user)
+            if user:
+                login(request,user)
+                return redirect('news')
+    return render(request,'register.html',{"form":form})
+
+def log_in(request):
+    form = Login()
+    if request.method=="POST":
+        form = Login(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            print(username,password)
+            user = authenticate(request, username=username, password=password)
+            print(user)
+            if user:
+                login(request,user)
+                return redirect('news')
+    return render(request,'login.html',{"form":form})
+
+def log_out(request):
+    logout(request)
+    return redirect('log_in')
